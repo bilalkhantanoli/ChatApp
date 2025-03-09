@@ -5,6 +5,7 @@ import authRoutes from './routes/auth.routes.js';
 import authMessages from './routes/message.routes.js';
 import { connectDB } from './lib/db.js';
 import cookieParser from 'cookie-parser';
+import cors from 'cors';
 
 // Load environment variables from .env file
 dotenv.config();
@@ -13,6 +14,10 @@ dotenv.config();
 const app = express();
 app.use(express.json());
 app.use(cookieParser());
+app.use(cors({
+  origin: process.env.CORS_ORIGIN,
+  credentials: true,
+}));
 
 // Define the port number
 const PORT = process.env.PORT;
