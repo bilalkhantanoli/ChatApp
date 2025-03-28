@@ -44,16 +44,16 @@ export const useChatStore = create((set, get) => ({
     }
   },
 
-  listenerMessage : () =>{
-    const {selectedUser} = get();
-    if(!selectedUser) return;
+  listenerMessage: () => {
+    const { selectedUser } = get();
+    if (!selectedUser) return;
 
     const socket = useAuthStore.getState().socket;
 
-    socket.on('new-message', (newMessage)=>{
-      if(newMessage.senderId !== selectedUser._id) return;
-      set({message: [...get().message, newMessage]});
-    })
+    socket.on('new-message', newMessage => {
+      if (newMessage.senderId !== selectedUser._id) return;
+      set({ message: [...get().message, newMessage] });
+    });
   },
   unListenerMessage: () => {
     const socket = useAuthStore.getState().socket;

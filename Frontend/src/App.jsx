@@ -16,7 +16,6 @@ const App = () => {
   const { user, checkAuth, isCheckingAuth, onLineUsers } = useAuthStore();
   const { theme } = useThemeStore();
 
-
   console.log('Online Users: ', onLineUsers);
 
   useEffect(() => {

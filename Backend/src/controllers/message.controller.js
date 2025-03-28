@@ -60,7 +60,6 @@ export const sendMessage = async (req, res) => {
       io.to(reciverSocketId).emit('new-message', newMessage);
     }
 
-
     res.status(200).json(newMessage);
   } catch (error) {
     console.error('Error in sendMessage: ', error);

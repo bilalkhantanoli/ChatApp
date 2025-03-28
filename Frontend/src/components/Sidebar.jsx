@@ -28,17 +28,17 @@ const Sidebar = () => {
           <Users className="h-5 w-5" />
           <span className="font-medium hidden lg:block">Contacts</span>
         </div>
-        <div className='mt-3 hidden lg:flex items-center gap-2'>
-          <label className='cursor-pointer flex items-center gap-2'>
-            <input 
-            type="checkbox" 
-            checked={showOnlineUser} 
-            onChange={(e) => setShowOnlineUser(e.target.checked)} 
-            className='checkbox checkbox-sm'
+        <div className="mt-3 hidden lg:flex items-center gap-2">
+          <label className="cursor-pointer flex items-center gap-2">
+            <input
+              type="checkbox"
+              checked={showOnlineUser}
+              onChange={e => setShowOnlineUser(e.target.checked)}
+              className="checkbox checkbox-sm"
             />
-            <span className='text-sm'>Show Online Users</span>
+            <span className="text-sm">Show Online Users</span>
           </label>
-          <span className='text-xs text-zinc-400'>{(onLineUsers.length - 1)}</span>
+          <span className="text-xs text-zinc-400">{onLineUsers.length - 1}</span>
         </div>
       </div>
       <div className="overflow-y-auto w-full py-3">
@@ -72,9 +72,7 @@ const Sidebar = () => {
           </button>
         ))}
         {filterOnlineUsers.length === 0 && (
-          <div className="py-4 text-center text-zinc-400">
-            No Online Users
-          </div>
+          <div className="py-4 text-center text-zinc-400">No Online Users</div>
         )}
       </div>
     </aside>
