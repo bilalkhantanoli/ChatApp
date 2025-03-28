@@ -1,5 +1,5 @@
 // Importing mongoose
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 // Defining the user schema
 
@@ -21,13 +21,13 @@ const userSchema = new mongoose.Schema(
     },
     profilePicture: {
       type: String,
-      default: "",
+      default: '',
     },
   },
   { timestamps: true }
 );
 
 // Creating the user model
-const User = mongoose.model("User", userSchema);
+const User = mongoose.model('User', userSchema);
 
 export default User;
