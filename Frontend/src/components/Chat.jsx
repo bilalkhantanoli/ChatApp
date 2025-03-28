@@ -1,19 +1,35 @@
-import React, { useEffect } from "react";
-import { useChatStore } from "../store/useChatStore";
-import ChatHeader from "./ChatHeader";
-import ChatInput from "./ChatInput";
-import MessageSkeleton from "./skeleton/MessageSkeleton";
-import { useAuthStore } from "../store/useAuthStore";
-import { formatTime } from "../lib/utils";
+import React, { useEffect, useRef } from 'react';
+import { useChatStore } from '../store/useChatStore';
+import ChatHeader from './ChatHeader';
+import ChatInput from './ChatInput';
+import MessageSkeleton from './skeleton/MessageSkeleton';
+import { useAuthStore } from '../store/useAuthStore';
+import { formatTime } from '../lib/utils';
 
 const Chat = () => {
-  const { isMessageLoading, selectedUser, message, getMessages } =
-    useChatStore();
+  const {
+    isMessageLoading,
+    selectedUser,
+    message,
+    getMessages,
+    listenerMessage,
+    unListenerMessage,
+  } = useChatStore();
   const { user } = useAuthStore();
+  const messageEndRef = useRef(null);
 
   useEffect(() => {
     getMessages(selectedUser?._id);
-  }, [selectedUser._id, getMessages]);
+    listenerMessage();
+    return () => {
+      unListenerMessage();
+    };
+  }, [selectedUser._id, getMessages, listenerMessage, unListenerMessage]);
+
+  useEffect(() => {
+    if (messageEndRef.current && message)
+      messageEndRef.current.scrollIntoView({ behavior: 'smooth' });
+  }, [message]);
 
   if (isMessageLoading) {
     return (
@@ -30,12 +46,11 @@ const Chat = () => {
       <ChatHeader />
 
       <div className="flex-1 overflow-y-auto p-4 space-y-4">
-        {message.map((msg) => (
+        {message.map(msg => (
           <div
             key={msg._id}
-            className={`chat ${
-              msg.senderId === selectedUser._id ? "chat-start" : "chat-end"
-            }`}
+            className={`chat ${msg.senderId === selectedUser._id ? 'chat-start' : 'chat-end'}`}
+            ref={messageEndRef}
           >
             <div className="chat-image avatar">
               <div className="size-10 rounded-full border">
@@ -43,27 +58,23 @@ const Chat = () => {
                   src={
                     msg.senderId === user._id
                       ? user.profilePicture ||
-                        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRAd5avdba8EiOZH8lmV3XshrXx7dKRZvhx-A&s"
+                        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRAd5avdba8EiOZH8lmV3XshrXx7dKRZvhx-A&s'
                       : selectedUser.profilePicture ||
-                        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRAd5avdba8EiOZH8lmV3XshrXx7dKRZvhx-A&s"
+                        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRAd5avdba8EiOZH8lmV3XshrXx7dKRZvhx-A&s'
                   }
                   alt="profile picture"
                 />
               </div>
             </div>
             <div className="chat-bubble flex flex-col">
-              {
-                msg.media && (
-                  <img 
+              {msg.media && (
+                <img
                   src={msg.media}
                   alt="media"
-                  className="sm:max-w[200px] rounded-md mb-2"
-                  />
-                )
-                
-              }
+                  className="sm:max-w[200px] max-w-md rounded-md mb-2"
+                />
+              )}
               {msg.message && <p>{msg.message}</p>}
-
             </div>
             <div className="chat-header mb-1">
               <time className="text-xs opacity-50 ml-1">{formatTime(msg.createdAt)}</time>

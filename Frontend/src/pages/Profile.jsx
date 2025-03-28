@@ -1,14 +1,14 @@
-import React, { useState } from "react";
-import { useAuthStore } from "../store/useAuthStore.js";
-import { Camera, Mail, User } from "lucide-react";
+import React, { useState } from 'react';
+import { useAuthStore } from '../store/useAuthStore.js';
+import { Camera, Mail, User } from 'lucide-react';
 
 const Profile = () => {
   const { user, isUpdatingProfile, updateProfile } = useAuthStore();
   const [selectedImage, setSelectedImage] = useState(null);
 
-  const handleImageUpload = async (e) => {
+  const handleImageUpload = async e => {
     const file = e.target.files[0];
-    if(!file) return;
+    if (!file) return;
 
     const reader = new FileReader();
     reader.readAsDataURL(file);
@@ -17,7 +17,7 @@ const Profile = () => {
       const baseImage64 = reader.result;
       setSelectedImage(baseImage64);
       await updateProfile({ profilePicture: baseImage64 });
-    }
+    };
   };
 
   return (
@@ -32,16 +32,14 @@ const Profile = () => {
           <div className="flex flex-col items-center gap-4">
             <div className="relative">
               <img
-                src={selectedImage || user?.profilePicture || "../../public/vite.svg"}
+                src={selectedImage || user?.profilePicture || '../../public/vite.svg'}
                 alt="Profile Picture"
                 className="size-32 rounded-full object-cover border-4"
               />
               <label
                 htmlFor="uploadProfilePicture"
                 className={`absolute bottom-0 right-0 bg-base-content hover:scale-105 p-2 rounded-full cursor-pointer transition-all duration-200 
-                ${
-                  isUpdatingProfile ? "animate-pulse pointer-events-none" : ""
-                }`}
+                ${isUpdatingProfile ? 'animate-pulse pointer-events-none' : ''}`}
               >
                 <Camera className="w-5 h-5 text-base-200" />
                 <input
@@ -55,14 +53,12 @@ const Profile = () => {
               </label>
             </div>
             <p className="text-sm text-zinc-400">
-              {isUpdatingProfile
-                ? "Uploading..."
-                : "Click icon to Upload Profile Picture"}
+              {isUpdatingProfile ? 'Uploading...' : 'Click icon to Upload Profile Picture'}
             </p>
           </div>
 
           <div className="space-y-6">
-            <div className="space-y-1.5"> 
+            <div className="space-y-1.5">
               <div className="flex items-center text-sm text-zinc-400 gap-2">
                 <User className="w-5 h-5" />
                 Full Name
@@ -82,7 +78,7 @@ const Profile = () => {
             <div className="space-y-3 text-sm">
               <div className="flex justify-between items-center py-2 border-b border-zinc-700">
                 <span>Member Since</span>
-                <span>{user?.createdAt?.split("T")[0]}</span>
+                <span>{user?.createdAt?.split('T')[0]}</span>
               </div>
               <div className="flex justify-between items-center py-2 ">
                 <span>Active Status</span>

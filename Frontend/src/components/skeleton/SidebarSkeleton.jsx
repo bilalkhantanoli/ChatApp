@@ -1,5 +1,5 @@
-import React from "react";
-import { User } from "lucide-react";
+import React from 'react';
+import { User } from 'lucide-react';
 const SidebarSkeleton = () => {
   const skeletonUsers = Array(9).fill(null);
 

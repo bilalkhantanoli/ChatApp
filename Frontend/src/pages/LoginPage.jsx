@@ -1,36 +1,35 @@
-import React, { useState } from 'react'
-import { useAuthStore } from '../store/useAuthStore'
-import toast from 'react-hot-toast'
-import { Eye, EyeOff, Loader2, Mail, MessageSquare, Lock } from 'lucide-react'
-import { Link } from 'react-router-dom'
-import AuthImagePattern from '../components/AuthImagePattern'
+import React, { useState } from 'react';
+import { useAuthStore } from '../store/useAuthStore';
+import toast from 'react-hot-toast';
+import { Eye, EyeOff, Loader2, Mail, MessageSquare, Lock } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import AuthImagePattern from '../components/AuthImagePattern';
 
 const LoginPage = () => {
-
-  const [showPassword, setShowPassword] = useState(false)
+  const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
     email: '',
-    password: ''
-  })
+    password: '',
+  });
 
   const validateForm = () => {
-    if (!formData.email.trim()) return toast.error("Email is required");
-    if (!/\S+@\S+\.\S+/.test(formData.email)) return toast.error("Invalid email format");
-    if (!formData.password) return toast.error("Password is required");
-    if (formData.password.length < 6) return toast.error("Password must be at least 6 characters");
+    if (!formData.email.trim()) return toast.error('Email is required');
+    if (!/\S+@\S+\.\S+/.test(formData.email)) return toast.error('Invalid email format');
+    if (!formData.password) return toast.error('Password is required');
+    if (formData.password.length < 6) return toast.error('Password must be at least 6 characters');
 
-    return true
-  }
+    return true;
+  };
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
+  const handleSubmit = e => {
+    e.preventDefault();
     const isValid = validateForm();
     if (isValid === true) {
-      login(formData)
+      login(formData);
     }
-  }
-    
-  const { login, isLogIn } = useAuthStore()
+  };
+
+  const { login, isLogIn } = useAuthStore();
   return (
     <div className="min-h-screen grid lg:grid-cols-2">
       {/* left side grid */}
@@ -46,9 +45,7 @@ const LoginPage = () => {
                 <MessageSquare className="h-6 w-6 text-primary" />
               </div>
               <h1 className="text-2xl font-bold mt-2">Welcome Back</h1>
-              <p className="text-base-content/60">
-                Login to your account
-              </p>
+              <p className="text-base-content/60">Login to your account</p>
             </div>
           </div>
 
@@ -58,17 +55,15 @@ const LoginPage = () => {
                 <span className="label-text font-medium">Email</span>
               </label>
               <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Mail className="h-6 w-6 text-base-content/40" />
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none z-[1]">
+                  <Mail className="size-5 text-base-content/40" />
                 </div>
                 <input
                   type="email"
                   className={`input input-bordered w-full pl-10`}
                   placeholder="you@example.com"
                   value={formData.email}
-                  onChange={(e) =>
-                    setFormData({ ...formData, email: e.target.value })
-                  }
+                  onChange={e => setFormData({ ...formData, email: e.target.value })}
                 />
               </div>
             </div>
@@ -78,17 +73,15 @@ const LoginPage = () => {
                 <span className="label-text font-medium">Password</span>
               </label>
               <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Lock className="h-6 w-6 text-base-content/40" />
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none z-[1]">
+                  <Lock className="size-5 text-base-content/40" />
                 </div>
                 <input
-                  type={showPassword ? "text" : "password"}
+                  type={showPassword ? 'text' : 'password'}
                   className={`input input-bordered w-full pl-10`}
                   placeholder="••••••••"
                   value={formData.password}
-                  onChange={(e) =>
-                    setFormData({ ...formData, password: e.target.value })
-                  }
+                  onChange={e => setFormData({ ...formData, password: e.target.value })}
                 />
                 <button
                   type="button"
@@ -104,25 +97,21 @@ const LoginPage = () => {
               </div>
             </div>
 
-            <button
-              type="submit"
-              className="btn btn-primary w-full"
-              disabled={isLogIn}
-            >
+            <button type="submit" className="btn btn-primary w-full" disabled={isLogIn}>
               {isLogIn ? (
                 <>
                   <Loader2 className="size-5 animate-spin" />
                   Loading...
                 </>
               ) : (
-                "Sign in"
+                'Sign in'
               )}
             </button>
           </form>
 
           <div className="text-center">
             <p className="text-base-content/60">
-              Don't have an account?{" "}
+              Don't have an account?{' '}
               <Link to="/signup" className="link link-primary">
                 SignUp
               </Link>
@@ -130,14 +119,11 @@ const LoginPage = () => {
           </div>
         </div>
       </div>
-          
-        {/* right side grid */}
-          <AuthImagePattern
-            title="Welcome Back"
-            subtitle="Get back to your account"
-          />
-    </div>
-  )
-}
 
-export default LoginPage
+      {/* right side grid */}
+      <AuthImagePattern title="Welcome Back" subtitle="Get back to your account" />
+    </div>
+  );
+};
+
+export default LoginPage;

@@ -1,16 +1,16 @@
-import React, { useRef, useState } from "react";
-import { useChatStore } from "../store/useChatStore";
-import { X, Image, Send } from "lucide-react";
+import React, { useRef, useState } from 'react';
+import { useChatStore } from '../store/useChatStore';
+import { X, Image, Send } from 'lucide-react';
 
 const ChatInput = () => {
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState('');
   const [imagaePreview, setImagePreview] = useState(null);
   const fileInputRef = useRef(null);
   const { sendMessage } = useChatStore();
 
-  const handleImageChange = (e) => {
+  const handleImageChange = e => {
     const file = e.target.files[0];
-    if (!file.type.startsWith("image")) return;
+    if (!file.type.startsWith('image')) return;
 
     const reader = new FileReader();
     reader.onloadend = () => {
@@ -21,10 +21,10 @@ const ChatInput = () => {
   const removeImage = () => {
     setImagePreview(null);
     if (fileInputRef.current) {
-      fileInputRef.current.value = "";
+      fileInputRef.current.value = '';
     }
   };
-  const handleSendMessage = async (e) => {
+  const handleSendMessage = async e => {
     e.preventDefault();
     if (!message.trim() && !imagaePreview) return;
     try {
@@ -32,10 +32,10 @@ const ChatInput = () => {
         message: message.trim(),
         media: imagaePreview,
       });
-      setMessage("");
+      setMessage('');
       removeImage();
     } catch (error) {
-      console.log("Error sending message", error);
+      console.log('Error sending message', error);
     }
   };
 
@@ -65,7 +65,7 @@ const ChatInput = () => {
           <input
             type="text"
             value={message}
-            onChange={(e) => setMessage(e.target.value)}
+            onChange={e => setMessage(e.target.value)}
             placeholder="Type a message..."
             className="w-full rounded-lg input input-bordered input-sm sm:input-md"
           />
@@ -80,7 +80,7 @@ const ChatInput = () => {
             type="button"
             onClick={() => fileInputRef.current.click()}
             className={`hidden sm:flex  btn btn-circle 
-              ${imagaePreview ? "text-emerald-500" : "text-zinc-500"}
+              ${imagaePreview ? 'text-emerald-500' : 'text-zinc-500'}
               `}
           >
             <Image size={20} />
